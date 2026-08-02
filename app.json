@@ -1,0 +1,275 @@
+{
+  "id": "net.derijke.ovpassaldo",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": ["local"],
+  "name": {
+    "en": "OV-Pas Saldo",
+    "nl": "OV-Pas Saldo"
+  },
+  "description": {
+    "en": "Track the balance and status of your OV-pas. Unofficial app — not affiliated with, or endorsed by, Translink or OVpay.",
+    "nl": "Volg het saldo en de status van je OV-pas. Onofficiële app — niet gelieerd aan of goedgekeurd door Translink of OVpay."
+  },
+  "category": ["tools"],
+  "brandColor": "#D6006E",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Jan-Kees de Rijke",
+    "email": "jan-kees@de-rijke.net"
+  },
+  "support": "mailto:jan-kees@de-rijke.net",
+  "source": "https://github.com/jankeesder/net.derijke.ovpassaldo",
+  "bugs": {
+    "url": "https://github.com/jankeesder/net.derijke.ovpassaldo/issues"
+  },
+
+  "capabilities": {
+    "ovpas_balance_display": {
+      "type": "string",
+      "title": { "en": "Balance", "nl": "Saldo" },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/balance.svg",
+      "insights": false
+    },
+    "measure_ovpas_balance": {
+      "type": "number",
+      "title": { "en": "Balance (value)", "nl": "Saldo (waarde)" },
+      "units": { "en": "EUR", "nl": "EUR" },
+      "decimals": 2,
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "insights": true
+    },
+    "ovpas_status": {
+      "type": "string",
+      "title": { "en": "Card status", "nl": "Kaartstatus" },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/status.svg",
+      "insights": false
+    },
+    "refresh_now": {
+      "type": "boolean",
+      "title": { "en": "Refresh", "nl": "Ververs" },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/refresh.svg",
+      "insights": false
+    }
+  },
+
+  "drivers": [
+    {
+      "id": "ovpas_pas",
+      "name": { "en": "OV-pas", "nl": "OV-pas" },
+      "class": "other",
+      "capabilities": ["ovpas_balance_display", "ovpas_status", "refresh_now", "measure_ovpas_balance"],
+      "platforms": ["local"],
+      "connectivity": ["cloud"],
+      "images": {
+        "small": "/drivers/ovpas_pas/assets/images/small.png",
+        "large": "/drivers/ovpas_pas/assets/images/large.png",
+        "xlarge": "/drivers/ovpas_pas/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "start"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": { "en": "Card details", "nl": "Kaartgegevens" },
+          "children": [
+            {
+              "id": "cardNumber",
+              "type": "text",
+              "label": { "en": "Card number", "nl": "Kaartnummer" },
+              "value": ""
+            },
+            {
+              "id": "cardSequenceNumber",
+              "type": "text",
+              "label": { "en": "Sequence number", "nl": "Volgnummer" },
+              "value": ""
+            },
+            {
+              "id": "expiryDate",
+              "type": "label",
+              "label": { "en": "Expiry date", "nl": "Vervaldatum" },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": { "en": "Polling", "nl": "Verversen" },
+          "children": [
+            {
+              "id": "pollInterval",
+              "type": "number",
+              "label": { "en": "Check interval", "nl": "Controle-interval" },
+              "value": 15,
+              "min": 5,
+              "max": 1440,
+              "step": 1,
+              "units": { "en": "minutes", "nl": "minuten" },
+              "hint": {
+                "en": "How often the balance and status are refreshed (5–1440 minutes).",
+                "nl": "Hoe vaak saldo en status worden ververst (5–1440 minuten)."
+              }
+            },
+            {
+              "id": "lastChecked",
+              "type": "label",
+              "label": { "en": "Last checked", "nl": "Laatst gecontroleerd" },
+              "value": "—"
+            },
+            {
+              "id": "lastChanged",
+              "type": "label",
+              "label": { "en": "Last changed", "nl": "Laatst gewijzigd" },
+              "value": "—"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "flow": {
+    "triggers": [
+      {
+        "id": "ovpas_balance_changed",
+        "title": { "en": "The balance changed", "nl": "Het saldo is gewijzigd" },
+        "tokens": [
+          {
+            "name": "balance",
+            "type": "number",
+            "title": { "en": "Balance", "nl": "Saldo" },
+            "example": 35
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ovpas_pas"
+          }
+        ]
+      },
+      {
+        "id": "ovpas_balance_below",
+        "title": {
+          "en": "The balance drops below a value",
+          "nl": "Het saldo komt onder een bepaalde waarde"
+        },
+        "titleFormatted": {
+          "en": "The balance drops below [[limit]] EUR",
+          "nl": "Het saldo komt onder [[limit]] EUR"
+        },
+        "tokens": [
+          {
+            "name": "balance",
+            "type": "number",
+            "title": { "en": "Balance", "nl": "Saldo" },
+            "example": 35
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ovpas_pas"
+          },
+          {
+            "type": "number",
+            "name": "limit",
+            "title": { "en": "Limit (EUR)", "nl": "Grens (EUR)" },
+            "min": 0,
+            "step": 0.01,
+            "placeholder": { "en": "5.00", "nl": "5,00" }
+          }
+        ]
+      },
+      {
+        "id": "ovpas_card_unusable",
+        "title": {
+          "en": "The card is no longer usable",
+          "nl": "De kaart is niet meer bruikbaar"
+        },
+        "tokens": [
+          {
+            "name": "reason",
+            "type": "string",
+            "title": { "en": "Reason", "nl": "Reden" },
+            "example": { "en": "Card status: Blocked", "nl": "Kaartstatus: Geblokkeerd" }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ovpas_pas"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "ovpas_balance_is_below",
+        "title": {
+          "en": "Balance !{{is|is not}} below a value",
+          "nl": "Saldo is !{{lager|niet lager}} dan een waarde"
+        },
+        "titleFormatted": {
+          "en": "Balance !{{is|is not}} below [[limit]] EUR",
+          "nl": "Saldo is !{{lager|niet lager}} dan [[limit]] EUR"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ovpas_pas"
+          },
+          {
+            "type": "number",
+            "name": "limit",
+            "title": { "en": "Limit (EUR)", "nl": "Grens (EUR)" },
+            "min": 0,
+            "step": 0.01,
+            "placeholder": { "en": "5.00", "nl": "5,00" }
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "ovpas_refresh",
+        "title": {
+          "en": "Refresh balance and status now",
+          "nl": "Ververs saldo en status nu"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ovpas_pas"
+          }
+        ]
+      }
+    ]
+  }
+}

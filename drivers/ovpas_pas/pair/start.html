@@ -1,0 +1,106 @@
+<!--
+  Pairing wizard voor de OV-pas.
+  De gebruiker vult drie velden in: naam, kaartnummer en volgnummer.
+  We valideren live tegen de OVpay API (via de 'validate_card' handler in
+  driver.js) en maken daarna het device aan met de gegevens in settings.
+
+  In de Homey pairing-webview is het globale `Homey`-object automatisch
+  beschikbaar; er hoeft geen script te worden ingeladen.
+-->
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; padding: 16px; }
+  .field { margin-bottom: 14px; }
+  label { display: block; font-weight: 600; margin-bottom: 4px; }
+  input {
+    width: 100%; box-sizing: border-box; padding: 10px;
+    border: 1px solid #ccc; border-radius: 8px; font-size: 15px;
+  }
+  .hint { color: #888; font-size: 12px; margin-top: 4px; }
+  button {
+    width: 100%; padding: 12px; font-size: 16px; font-weight: 600;
+    border: 0; border-radius: 10px; background: #e6007e; color: #fff;
+    cursor: pointer;
+  }
+  button:disabled { opacity: .5; cursor: default; }
+  #message { margin-top: 12px; font-size: 14px; min-height: 18px; }
+  .error { color: #c0392b; }
+  .ok { color: #218838; }
+</style>
+
+<div class="field">
+  <label for="name">Naam van de kaart</label>
+  <input id="name" type="text" placeholder="OV-Pas Jan" />
+  <div class="hint">Vrij te kiezen, bijv. de naam van de eigenaar.</div>
+</div>
+
+<div class="field">
+  <label for="cardNumber">Kaartnummer</label>
+  <input id="cardNumber" type="text" placeholder="A12BCDE" autocapitalize="characters" />
+  <div class="hint">Staat op de voorkant van je OV-pas.</div>
+</div>
+
+<div class="field">
+  <label for="cardSequenceNumber">Volgnummer</label>
+  <input id="cardSequenceNumber" type="text" placeholder="A1BC" autocapitalize="characters" />
+  <div class="hint">Staat op de achterkant van je OV-pas.</div>
+</div>
+
+<button id="submit" type="button">Kaart toevoegen</button>
+<div id="message"></div>
+
+<script type="application/javascript">
+  const els = {
+    name: document.getElementById('name'),
+    cardNumber: document.getElementById('cardNumber'),
+    cardSequenceNumber: document.getElementById('cardSequenceNumber'),
+    submit: document.getElementById('submit'),
+    message: document.getElementById('message'),
+  };
+
+  function setMessage(text, cls) {
+    els.message.textContent = text;
+    els.message.className = cls || '';
+  }
+
+  async function onSubmit() {
+    const name = els.name.value.trim();
+    const cardNumber = els.cardNumber.value.trim().toUpperCase();
+    const cardSequenceNumber = els.cardSequenceNumber.value.trim().toUpperCase();
+
+    if (!name || !cardNumber || !cardSequenceNumber) {
+      setMessage('Vul alle drie de velden in.', 'error');
+      return;
+    }
+
+    els.submit.disabled = true;
+    setMessage('Kaart controleren bij OVpay…');
+
+    try {
+      // 1) Live valideren via de driver (haalt echte saldo/status op).
+      const card = await Homey.emit('validate_card', { cardNumber, cardSequenceNumber });
+
+      // 2) Device aanmaken. Kaartgegevens gaan naar settings; een uniek id
+      //    voorkomt dat dezelfde kaart dubbel wordt toegevoegd.
+      await Homey.createDevice({
+        name,
+        data: { id: `${cardNumber}-${cardSequenceNumber}` },
+        settings: {
+          cardNumber,
+          cardSequenceNumber,
+          expiryDate: card.expiryDate ? new Date(card.expiryDate).toISOString() : '',
+        },
+      });
+
+      setMessage('Kaart gevonden en toegevoegd!', 'ok');
+      Homey.done();
+    } catch (err) {
+      setMessage('Kon de kaart niet toevoegen: ' + (err && err.message ? err.message : err), 'error');
+      els.submit.disabled = false;
+    }
+  }
+
+  els.submit.addEventListener('click', onSubmit);
+
+  // Verplicht: vertelt Homey dat de view klaar is met laden.
+  Homey.ready();
+</script>

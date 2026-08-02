@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Gevulde kaart met uitgespaarde chip en contactloos-golven (evenodd -> holtes) -->
+  <path fill="#000000" fill-rule="evenodd"
+        d="M5 5 H19 A3 3 0 0 1 22 8 V16 A3 3 0 0 1 19 19 H5 A3 3 0 0 1 2 16 V8 A3 3 0 0 1 5 5 Z
+           M4.8 9.2 H9.2 V13.2 H4.8 Z
+           M12.11 9.10 A3.9 3.9 0 0 1 12.11 14.90 L11.44 14.15 A2.9 2.9 0 0 0 11.44 9.85 Z
+           M13.18 7.91 A5.5 5.5 0 0 1 13.18 16.09 L12.51 15.34 A4.5 4.5 0 0 0 12.51 8.66 Z
+           M14.25 6.72 A7.1 7.1 0 0 1 14.25 17.28 L13.58 16.53 A6.1 6.1 0 0 0 13.58 7.47 Z"/>
+</svg>

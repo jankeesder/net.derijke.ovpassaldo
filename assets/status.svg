@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Gevuld schild met uitgespaard vinkje (evenodd -> vinkje = negatieve ruimte) -->
+  <path fill="#000000" fill-rule="evenodd" clip-rule="evenodd"
+        d="M12 2 L4 5 V11 C4 16 7.4 19.5 12 22 C16.6 19.5 20 16 20 11 V5 Z
+           M10.7 15.6 L6.9 11.6 L8.4 10.1 L10.7 12.6 L15.6 7.7 L17.1 9.2 Z"/>
+</svg>

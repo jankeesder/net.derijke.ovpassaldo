@@ -1,0 +1,9 @@
+{
+  "name": "net.derijke.ovpassaldo",
+  "version": "1.0.0",
+  "main": "app.js",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  }
+}

@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6f0f8"/>
+      <stop offset="1" stop-color="#f7fafd"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c6cfd8"/>
+      <stop offset="1" stop-color="#9aa6b2"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfe6fb" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#9cc7ec" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f42d94"/>
+      <stop offset="1" stop-color="#d1006e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Achtergrond + perron -->
+  <rect x="0" y="0" width="1000" height="700" fill="url(#sky)"/>
+  <rect x="0" y="462" width="1000" height="238" fill="#cbd5de"/>
+  <rect x="0" y="462" width="1000" height="8" fill="#b6c2cd"/>
+  <!-- perron-lijnen (lichte perspectief) -->
+  <g stroke="#bcc7d1" stroke-width="2" opacity="0.6">
+    <line x1="120" y1="700" x2="300" y2="470"/>
+    <line x1="500" y1="700" x2="500" y2="470"/>
+    <line x1="880" y1="700" x2="700" y2="470"/>
+  </g>
+  <!-- gele veiligheidsstrook langs perronrand -->
+  <rect x="0" y="470" width="1000" height="10" fill="#f2c200" opacity="0.85"/>
+
+  <!-- ===================== INCHECKPOORTJES (links) ===================== -->
+  <!-- glazen kleppen tussen de sokkels -->
+  <g>
+    <rect x="118" y="372" width="87" height="82" rx="4" fill="url(#glass)" stroke="#9cc7ec" stroke-width="2"/>
+    <rect x="253" y="372" width="87" height="82" rx="4" fill="url(#glass)" stroke="#9cc7ec" stroke-width="2"/>
+  </g>
+  <!-- 3 sokkels met leeskop -->
+  <g>
+    <!-- sokkel-template herhaald op x = 70, 205, 340 -->
+    <g>
+      <rect x="70" y="312" width="48" height="150" rx="9" fill="url(#metal)"/>
+      <rect x="70" y="312" width="48" height="14" rx="7" fill="#d7dee5"/>
+      <rect x="68" y="262" width="52" height="66" rx="11" fill="#ffc20e"/>
+      <rect x="76" y="280" width="36" height="34" rx="6" fill="#20303f"/>
+      <circle cx="94" cy="297" r="9" fill="#34c759"/>
+      <path d="M89 297 l3 4 l6 -7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g>
+      <rect x="205" y="312" width="48" height="150" rx="9" fill="url(#metal)"/>
+      <rect x="205" y="312" width="48" height="14" rx="7" fill="#d7dee5"/>
+      <rect x="203" y="262" width="52" height="66" rx="11" fill="#ffc20e"/>
+      <rect x="211" y="280" width="36" height="34" rx="6" fill="#20303f"/>
+      <circle cx="229" cy="297" r="9" fill="#34c759"/>
+      <path d="M224 297 l3 4 l6 -7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g>
+      <rect x="340" y="312" width="48" height="150" rx="9" fill="url(#metal)"/>
+      <rect x="340" y="312" width="48" height="14" rx="7" fill="#d7dee5"/>
+      <rect x="338" y="262" width="52" height="66" rx="11" fill="#ffc20e"/>
+      <rect x="346" y="280" width="36" height="34" rx="6" fill="#20303f"/>
+      <circle cx="364" cy="297" r="9" fill="#34c759"/>
+      <path d="M359 297 l3 4 l6 -7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- ===================== BUSHALTE (midden-rechts) ===================== -->
+  <g>
+    <!-- paal -->
+    <rect x="590" y="250" width="9" height="212" fill="#8b96a1"/>
+    <rect x="588" y="248" width="13" height="8" rx="2" fill="#6f7a85"/>
+    <!-- haltebord -->
+    <rect x="512" y="248" width="86" height="70" rx="7" fill="#14509e"/>
+    <rect x="512" y="248" width="86" height="70" rx="7" fill="none" stroke="#0e3c78" stroke-width="2"/>
+    <!-- bus-pictogram -->
+    <g fill="#ffffff">
+      <rect x="524" y="262" width="34" height="24" rx="5"/>
+      <rect x="527" y="266" width="28" height="9" rx="2" fill="#14509e"/>
+      <circle cx="530" cy="287" r="3.2"/><circle cx="552" cy="287" r="3.2"/>
+    </g>
+    <!-- lijnnummers -->
+    <rect x="566" y="264" width="26" height="8" rx="4" fill="#ffffff"/>
+    <rect x="566" y="278" width="20" height="7" rx="3.5" fill="#bcd3ee"/>
+    <rect x="566" y="290" width="24" height="7" rx="3.5" fill="#bcd3ee"/>
+  </g>
+
+  <!-- ===================== INCHECKPAAL (OVpay-stijl reader) ===================== -->
+  <g>
+    <rect x="652" y="332" width="11" height="130" fill="#565b63"/>
+    <!-- donker leesapparaat -->
+    <rect x="636" y="300" width="44" height="50" rx="9" fill="#20232a"/>
+    <!-- klein groen scherm met vinkje -->
+    <rect x="642" y="306" width="17" height="13" rx="3" fill="#0f3320"/>
+    <path d="M645 313 l2.5 3 l4.5 -5.5" stroke="#39d267" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- roze contactloos-ring -->
+    <circle cx="658" cy="333" r="10" fill="none" stroke="#e6007e" stroke-width="3.4"/>
+    <circle cx="658" cy="333" r="3.2" fill="#e6007e"/>
+  </g>
+
+  <!-- ===================== BUS (rechts) ===================== -->
+  <g>
+    <ellipse cx="838" cy="470" rx="150" ry="14" fill="#000" opacity="0.08"/>
+    <rect x="694" y="262" width="278" height="196" rx="26" fill="#ef5b2b"/>
+    <rect x="694" y="262" width="278" height="26" rx="26" fill="#d94a1e"/>
+    <rect x="718" y="288" width="230" height="28" rx="6" fill="#20232a"/>
+    <text x="833" y="309" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#ffce46" text-anchor="middle">5  CENTRUM</text>
+    <rect x="718" y="330" width="104" height="70" rx="8" fill="#bfe3ff"/>
+    <rect x="832" y="330" width="58" height="70" rx="8" fill="#bfe3ff"/>
+    <rect x="900" y="330" width="48" height="118" rx="8" fill="#9fbdd6"/>
+    <rect x="923" y="330" width="3" height="118" fill="#6f93b0"/>
+    <rect x="694" y="430" width="278" height="18" rx="9" fill="#c94320"/>
+    <circle cx="726" cy="460" r="30" fill="#2b2f36"/><circle cx="726" cy="460" r="13" fill="#8b939c"/>
+    <circle cx="906" cy="460" r="30" fill="#2b2f36"/><circle cx="906" cy="460" r="13" fill="#8b939c"/>
+  </g>
+
+  <!-- ===================== OV-KAART (voorgrond, met saldo) — ONGEWIJZIGD ===================== -->
+  <g transform="rotate(-8 500 520)">
+    <rect x="366" y="430" width="268" height="172" rx="20" fill="#000" opacity="0.12"/>
+    <rect x="360" y="424" width="268" height="172" rx="20" fill="url(#card)"/>
+    <rect x="392" y="470" width="46" height="36" rx="6" fill="#f2c94c"/>
+    <path d="M392 488 h46 M415 470 v36" stroke="#c99b1f" stroke-width="2"/>
+    <g fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round">
+      <path d="M470 468 a20 20 0 0 1 0 34"/>
+      <path d="M482 460 a34 34 0 0 1 0 50"/>
+      <path d="M494 452 a48 48 0 0 1 0 66"/>
+    </g>
+    <text x="392" y="452" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#ffffff" opacity="0.9">OV-PAS</text>
+    <text x="392" y="560" font-family="Helvetica, Arial, sans-serif" font-size="46" font-weight="800" fill="#ffffff">&#8364;35,-</text>
+    <text x="394" y="582" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ffffff" opacity="0.85">Saldo</text>
+  </g>
+</svg>
