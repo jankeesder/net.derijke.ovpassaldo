@@ -1,21 +1,12 @@
-OV-Pas Saldo
+OV-Pas Saldo shows the balance and status of your OV-pas. Works for any OV-pas, using the card number and sequence number printed on the card.
 
-Keep an eye on the balance and status of your OV-pas, directly on your Homey.
+Add your card via Devices to see the balance (for example EUR 35 or EUR 35.65) and whether the card is still usable. Refresh on demand with the button on the device, or let it update automatically at an interval you choose.
 
-Add each OV-pas as a separate device using its card number and sequence number (printed on the front and back of the card). The app then shows:
-- Balance, formatted in euros (for example EUR 35 or EUR 35.65)
-- Card status: usable, or the exact reason it is not (expired, blocked, or an outstanding debt)
+What makes OV-Pas Saldo different? You can add multiple cards — each as its own tile in Homey with separate notifications and automations. Perfect when everyone in the family has their own OV-pas, or when you want to keep an eye on the kids' travel credit.
 
-Features:
-- Automatic refresh at an interval you choose per card (default 15 minutes)
-- A refresh button to update on demand
-- "Last checked" and "Last changed" timestamps in the device settings
+Example flow: low balance reminder
 
-Flow cards:
-- Trigger: the balance changed
-- Trigger: the balance dropped below an amount you set
-- Trigger: the card is no longer usable (with the exact reason)
-- Condition: balance is (not) below an amount
-- Action: refresh balance and status now
+When: The balance dropped below EUR 5 → [device]
+Then: Send a notification → "Top up [device]: the balance is [Balance]"
 
-Please note: this is an unofficial app. It is not affiliated with, endorsed by, or supported by Translink or OVpay. It uses a public, undocumented interface that may change at any time. Balance and travel data are shown as-is, without any guarantee.
+Please note: this is an unofficial app. It is not affiliated with, endorsed by, or supported by Translink or OVpay.
