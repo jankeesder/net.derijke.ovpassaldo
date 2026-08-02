@@ -9,8 +9,8 @@
     "nl": "OV-Pas Saldo"
   },
   "description": {
-    "en": "Track the balance and status of your OV-pas. Unofficial app — not affiliated with, or endorsed by, Translink or OVpay.",
-    "nl": "Volg het saldo en de status van je OV-pas. Onofficiële app — niet gelieerd aan of goedgekeurd door Translink of OVpay."
+    "en": "Track the balance and status of your OV-pas.",
+    "nl": "Volg het saldo en de status van je OV-pas."
   },
   "category": ["tools"],
   "brandColor": "#D6006E",
