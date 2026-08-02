@@ -1,6 +1,6 @@
 {
   "id": "net.derijke.ovpassaldo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": ["local"],
@@ -21,10 +21,9 @@
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name": "Jan-Kees de Rijke",
-    "email": "jan-kees@de-rijke.net"
+    "name": "Jan-Kees de Rijke"
   },
-  "support": "mailto:jan-kees@de-rijke.net",
+  "support": "https://github.com/jankeesder/net.derijke.ovpassaldo/issues",
   "source": "https://github.com/jankeesder/net.derijke.ovpassaldo",
   "bugs": {
     "url": "https://github.com/jankeesder/net.derijke.ovpassaldo/issues"
