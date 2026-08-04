@@ -1,15 +1,15 @@
 {
   "id": "net.derijke.ovpassaldo",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": ["local"],
   "name": {
-    "en": "OV-Pas Saldo",
+    "en": "OV-Pay Balance",
     "nl": "OV-Pas Saldo"
   },
   "description": {
-    "en": "Track the balance and status of your OV-pas.",
+    "en": "Track the balance and status of your OV-pay card.",
     "nl": "Volg het saldo en de status van je OV-pas."
   },
   "category": ["tools"],
@@ -72,7 +72,7 @@
   "drivers": [
     {
       "id": "ovpas_pas",
-      "name": { "en": "OV-pas", "nl": "OV-pas" },
+      "name": { "en": "OV-Pay Card", "nl": "OV-pas" },
       "class": "other",
       "capabilities": ["ovpas_balance_display", "ovpas_status", "refresh_now", "measure_ovpas_balance"],
       "platforms": ["local"],

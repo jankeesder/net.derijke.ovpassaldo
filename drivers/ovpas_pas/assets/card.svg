@@ -1,30 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#eaf3fb"/>
-      <stop offset="1" stop-color="#f8fbfe"/>
-    </linearGradient>
     <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#f42d94"/>
       <stop offset="1" stop-color="#d1006e"/>
     </linearGradient>
   </defs>
 
-  <rect x="0" y="0" width="1000" height="1000" fill="url(#bg)"/>
+  <!-- Alleen de kaart op een witte achtergrond -->
+  <rect x="0" y="0" width="1000" height="1000" fill="#ffffff"/>
 
-  <!-- subtiele transit-silhouetten op de achtergrond -->
-  <g fill="#d3dde6">
-    <!-- trein -->
-    <rect x="150" y="250" width="200" height="150" rx="24"/>
-    <rect x="175" y="285" width="150" height="55" rx="10" fill="#c3cfd9"/>
-    <!-- bus -->
-    <rect x="650" y="260" width="210" height="140" rx="26"/>
-    <rect x="672" y="295" width="166" height="50" rx="10" fill="#c3cfd9"/>
-    <circle cx="700" cy="405" r="20"/><circle cx="810" cy="405" r="20"/>
-  </g>
-
-  <!-- OV-kaart, gecentreerd en licht gekanteld -->
-  <g transform="rotate(-8 500 560)">
+  <g transform="translate(0,-60) rotate(-8 500 560)">
     <rect x="238" y="446" width="524" height="330" rx="34" fill="#000" opacity="0.12"/>
     <rect x="230" y="438" width="524" height="330" rx="34" fill="url(#card)"/>
     <!-- chip -->

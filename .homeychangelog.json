@@ -1,4 +1,8 @@
 {
+  "1.0.5": {
+    "en": "English name is now OV-Pay Balance, new app image, and a cleaner card image.",
+    "nl": "Engelse naam is nu OV-Pay Balance, nieuwe app-afbeelding en een strakkere kaartafbeelding."
+  },
   "1.0.4": {
     "en": "Corrected the example values shown on the pairing screen.",
     "nl": "Voorbeeldwaarden op het koppelscherm gecorrigeerd."
