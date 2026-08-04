@@ -1,11 +1,7 @@
 <!--
   Pairing wizard voor de OV-pas.
-  De gebruiker vult drie velden in: naam, kaartnummer en volgnummer.
-  We valideren live tegen de OVpay API (via de 'validate_card' handler in
-  driver.js) en maken daarna het device aan met de gegevens in settings.
-
-  In de Homey pairing-webview is het globale `Homey`-object automatisch
-  beschikbaar; er hoeft geen script te worden ingeladen.
+  Alle teksten komen uit /locales/*.json via Homey.__() zodat het scherm
+  meertalig is (EN + NL), net als de rest van de app-metadata.
 -->
 <style>
   body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; padding: 16px; }
@@ -28,59 +24,62 @@
 </style>
 
 <div class="field">
-  <label for="name">Naam van de kaart</label>
+  <label id="lbl-name" for="name"></label>
   <input id="name" type="text" placeholder="OV-Pas Jan" />
-  <div class="hint">Vrij te kiezen, bijv. de naam van de eigenaar.</div>
+  <div class="hint" id="hint-name"></div>
 </div>
 
 <div class="field">
-  <label for="cardNumber">Kaartnummer</label>
+  <label id="lbl-cardnumber" for="cardNumber"></label>
   <input id="cardNumber" type="text" placeholder="A12BCDE" autocapitalize="characters" />
-  <div class="hint">Staat op de voorkant van je OV-pas.</div>
+  <div class="hint" id="hint-cardnumber"></div>
 </div>
 
 <div class="field">
-  <label for="cardSequenceNumber">Volgnummer</label>
+  <label id="lbl-sequence" for="cardSequenceNumber"></label>
   <input id="cardSequenceNumber" type="text" placeholder="A1BC" autocapitalize="characters" />
-  <div class="hint">Staat op de achterkant van je OV-pas.</div>
+  <div class="hint" id="hint-sequence"></div>
 </div>
 
-<button id="submit" type="button">Kaart toevoegen</button>
+<button id="submit" type="button"></button>
 <div id="message"></div>
 
 <script type="application/javascript">
-  const els = {
-    name: document.getElementById('name'),
-    cardNumber: document.getElementById('cardNumber'),
-    cardSequenceNumber: document.getElementById('cardSequenceNumber'),
-    submit: document.getElementById('submit'),
-    message: document.getElementById('message'),
-  };
+  const $ = (id) => document.getElementById(id);
+
+  // Vertalingen toepassen op de statische teksten.
+  $('lbl-name').textContent = Homey.__('pair.name_label');
+  $('hint-name').textContent = Homey.__('pair.name_hint');
+  $('lbl-cardnumber').textContent = Homey.__('pair.card_number_label');
+  $('hint-cardnumber').textContent = Homey.__('pair.card_number_hint');
+  $('lbl-sequence').textContent = Homey.__('pair.sequence_label');
+  $('hint-sequence').textContent = Homey.__('pair.sequence_hint');
+  $('submit').textContent = Homey.__('pair.submit');
 
   function setMessage(text, cls) {
-    els.message.textContent = text;
-    els.message.className = cls || '';
+    const m = $('message');
+    m.textContent = text;
+    m.className = cls || '';
   }
 
   async function onSubmit() {
-    const name = els.name.value.trim();
-    const cardNumber = els.cardNumber.value.trim().toUpperCase();
-    const cardSequenceNumber = els.cardSequenceNumber.value.trim().toUpperCase();
+    const name = $('name').value.trim();
+    const cardNumber = $('cardNumber').value.trim().toUpperCase();
+    const cardSequenceNumber = $('cardSequenceNumber').value.trim().toUpperCase();
 
     if (!name || !cardNumber || !cardSequenceNumber) {
-      setMessage('Vul alle drie de velden in.', 'error');
+      setMessage(Homey.__('pair.fill_all'), 'error');
       return;
     }
 
-    els.submit.disabled = true;
-    setMessage('Kaart controleren bij OVpay…');
+    $('submit').disabled = true;
+    setMessage(Homey.__('pair.checking'));
 
     try {
       // 1) Live valideren via de driver (haalt echte saldo/status op).
       const card = await Homey.emit('validate_card', { cardNumber, cardSequenceNumber });
 
-      // 2) Device aanmaken. Kaartgegevens gaan naar settings; een uniek id
-      //    voorkomt dat dezelfde kaart dubbel wordt toegevoegd.
+      // 2) Device aanmaken; kaartgegevens gaan naar settings.
       await Homey.createDevice({
         name,
         data: { id: `${cardNumber}-${cardSequenceNumber}` },
@@ -91,15 +90,15 @@
         },
       });
 
-      setMessage('Kaart gevonden en toegevoegd!', 'ok');
+      setMessage(Homey.__('pair.added'), 'ok');
       Homey.done();
     } catch (err) {
-      setMessage('Kon de kaart niet toevoegen: ' + (err && err.message ? err.message : err), 'error');
-      els.submit.disabled = false;
+      setMessage(Homey.__('pair.error_prefix') + (err && err.message ? err.message : err), 'error');
+      $('submit').disabled = false;
     }
   }
 
-  els.submit.addEventListener('click', onSubmit);
+  $('submit').addEventListener('click', onSubmit);
 
   // Verplicht: vertelt Homey dat de view klaar is met laden.
   Homey.ready();

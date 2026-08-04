@@ -59,7 +59,7 @@ class OVpayDevice extends Homey.Device {
     const { cardNumber, cardSequenceNumber } = this.getSettings();
 
     if (!cardNumber || !cardSequenceNumber) {
-      await this.setUnavailable('Kaartnummer of volgnummer ontbreekt in de instellingen.')
+      await this.setUnavailable(this.homey.__('device.missing_card'))
         .catch(this.error);
       return;
     }
@@ -71,7 +71,7 @@ class OVpayDevice extends Homey.Device {
     } catch (err) {
       // --- Robuuste error-handling: app mag niet crashen als de API offline is ---
       this.error('OVpay API onbereikbaar:', err.message);
-      await this.setWarning('OVpay API niet bereikbaar — laatst bekende waarden blijven staan.')
+      await this.setWarning(this.homey.__('device.api_unreachable'))
         .catch(() => {});
       return; // laatst bekende capability-waarden blijven behouden
     }
@@ -80,8 +80,9 @@ class OVpayDevice extends Homey.Device {
     await this.setAvailable().catch(() => {});
     await this.unsetWarning().catch(() => {});
 
+    const statusLabel = this._statusLabel(card);
     const balanceChanged = await this._updateBalance(card);
-    const status = await this._updateStatus(card);
+    const status = await this._updateStatus(card, statusLabel);
     const changed = balanceChanged || status.changed;
 
     // Alle settings in ÉÉN keer schrijven (voorkomt botsende setSettings-calls).
@@ -96,7 +97,32 @@ class OVpayDevice extends Homey.Device {
     }
     await this.setSettings(patch).catch(this.error);
 
-    this.log(`Ververst — saldo ${card.balanceText}, status "${card.statusLabel}", gewijzigd=${changed}`);
+    this.log(`Ververst — saldo ${card.balanceText}, status "${statusLabel}", gewijzigd=${changed}`);
+  }
+
+  /**
+   * Bouwt de vertaalde statustekst op uit de taal-neutrale reden-structuur.
+   * @param {object} card Resultaat van OVpayApi.normalize().
+   * @returns {string}
+   */
+  _statusLabel(card) {
+    if (card.usable) return this.homey.__('status.usable');
+    const r = card.reason || {};
+    switch (r.key) {
+      case 'status':
+        return this.homey.__('status.status', { status: r.status });
+      case 'blocked':
+        return this.homey.__('status.blocked', { arl: r.arl });
+      case 'expired': {
+        const d = r.date;
+        const date = d ? `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}` : '?';
+        return this.homey.__('status.expired', { date });
+      }
+      case 'debt':
+        return this.homey.__('status.debt', { amount: Number(r.amount).toFixed(2) });
+      default:
+        return this.homey.__('status.unusable');
+    }
   }
 
   /** Huidige tijd in lokale (Homey-)tijdzone, NL-notatie: dd-mm-jjjj uu:mm:ss. */
@@ -149,10 +175,10 @@ class OVpayDevice extends Homey.Device {
    * bij een overgang van bruikbaar -> onbruikbaar.
    * @returns {{changed: boolean, expiryIso: (string|null)}}
    */
-  async _updateStatus(card) {
-    const changed = this.getCapabilityValue('ovpas_status') !== card.statusLabel;
+  async _updateStatus(card, statusLabel) {
+    const changed = this.getCapabilityValue('ovpas_status') !== statusLabel;
     if (changed) {
-      await this.setCapabilityValue('ovpas_status', card.statusLabel)
+      await this.setCapabilityValue('ovpas_status', statusLabel)
         .catch(this.error);
     }
 
@@ -161,7 +187,7 @@ class OVpayDevice extends Homey.Device {
     const becameUnusable = !card.usable && this._lastUsable !== false;
     if (becameUnusable) {
       this.driver.cardUnusableTrigger
-        .trigger(this, { reason: card.unusableReason })
+        .trigger(this, { reason: statusLabel })
         .catch(this.error);
     }
     this._lastUsable = card.usable;

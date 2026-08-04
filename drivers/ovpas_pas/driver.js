@@ -51,7 +51,7 @@ class OVpayDriver extends Homey.Driver {
   onPair(session) {
     session.setHandler('validate_card', async ({ cardNumber, cardSequenceNumber }) => {
       if (!cardNumber || !cardSequenceNumber) {
-        throw new Error('Vul zowel het kaartnummer als het volgnummer in.');
+        throw new Error(this.homey.__('pair.enter_both'));
       }
 
       // Gooit een fout wanneer de API onbereikbaar is of de kaart niet bestaat;

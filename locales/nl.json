@@ -1,0 +1,28 @@
+{
+  "pair": {
+    "name_label": "Naam van de kaart",
+    "name_hint": "Vrij te kiezen, bijv. de naam van de eigenaar.",
+    "card_number_label": "Kaartnummer",
+    "card_number_hint": "Staat op de voorkant van je kaart.",
+    "sequence_label": "Volgnummer",
+    "sequence_hint": "Staat op de achterkant van je kaart.",
+    "submit": "Kaart toevoegen",
+    "checking": "Kaart controleren…",
+    "fill_all": "Vul alle drie de velden in.",
+    "enter_both": "Vul zowel het kaartnummer als het volgnummer in.",
+    "added": "Kaart gevonden en toegevoegd!",
+    "error_prefix": "Kon de kaart niet toevoegen: "
+  },
+  "status": {
+    "usable": "Bruikbaar",
+    "status": "Kaartstatus: {{status}}",
+    "blocked": "Geblokkeerd (ARL-status: {{arl}})",
+    "expired": "Verlopen op {{date}}",
+    "debt": "Openstaande schuld: € {{amount}}",
+    "unusable": "Onbruikbaar"
+  },
+  "device": {
+    "missing_card": "Kaartnummer of volgnummer ontbreekt in de instellingen.",
+    "api_unreachable": "OVpay API niet bereikbaar — laatst bekende waarden blijven staan."
+  }
+}

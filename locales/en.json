@@ -1,0 +1,28 @@
+{
+  "pair": {
+    "name_label": "Name of the card",
+    "name_hint": "Freely chosen, e.g. the owner's name.",
+    "card_number_label": "Card number",
+    "card_number_hint": "Printed on the front of your card.",
+    "sequence_label": "Sequence number",
+    "sequence_hint": "Printed on the back of your card.",
+    "submit": "Add card",
+    "checking": "Checking card…",
+    "fill_all": "Please fill in all three fields.",
+    "enter_both": "Please enter both the card number and the sequence number.",
+    "added": "Card found and added!",
+    "error_prefix": "Could not add the card: "
+  },
+  "status": {
+    "usable": "Usable",
+    "status": "Card status: {{status}}",
+    "blocked": "Blocked (ARL status: {{arl}})",
+    "expired": "Expired on {{date}}",
+    "debt": "Outstanding debt: € {{amount}}",
+    "unusable": "Unusable"
+  },
+  "device": {
+    "missing_card": "Card number or sequence number is missing in the settings.",
+    "api_unreachable": "OVpay API not reachable — last known values are kept."
+  }
+}

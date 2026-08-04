@@ -1,4 +1,8 @@
 {
+  "1.0.6": {
+    "en": "The pairing screen and status texts are now available in English and Dutch.",
+    "nl": "Het koppelscherm en de statusteksten zijn nu beschikbaar in het Engels en Nederlands."
+  },
   "1.0.5": {
     "en": "English name is now OV-Pay Balance, new app image, and a cleaner card image.",
     "nl": "Engelse naam is nu OV-Pay Balance, nieuwe app-afbeelding en een strakkere kaartafbeelding."
